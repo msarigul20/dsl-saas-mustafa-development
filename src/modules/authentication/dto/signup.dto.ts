@@ -19,6 +19,13 @@ export class SignUpDto {
     @IsEmail({}, {message: 'email is not valid!'})
     email: string;
 
+    @IsNotEmpty({message: 'birthDate cannot be empty!'})
+    @IsDateString({}, {message: 'birthDate is not valid!'})
+    birthDate: string;
+
+    @IsOptional()
+    avatar: string;
+
     @IsNotEmpty({message: 'Password cannot be empty!'})
     @IsStrongPassword({
         minLength: 8,

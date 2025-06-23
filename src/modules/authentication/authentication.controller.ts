@@ -13,6 +13,7 @@ import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { UserService } from '../user/user.service';
 import { UserType } from '../user/user.type';
 import { ProfileType } from '../profile/profile.type';
+import { createProfileDto } from '../profile/functions/profile.function';
 
 
 @Controller('authentication')
@@ -52,9 +53,10 @@ export class AuthenticationController {
   @Post('signup')
   async signup(@Body() signUpDto: SignUpDto) {
     const userType: UserType = convertUserDtoToType(signUpDto);
-    /*nst signedUpUser: User = await this.authenticationService.signUpUser(userType);
-
+    const signedUpUser: User = await this.authenticationService.signUpUser(userType);
+    
     let profileDto: CreateProfileDto = createProfileDto({signUpDto: signUpDto, _user: signedUpUser});
+    /*
     const profileType: ProfileType = convertProfileDtoToType(profileDto);
     const signedUpUserProfile: Profile = await this.profileService.createProfile(profileType);
 
