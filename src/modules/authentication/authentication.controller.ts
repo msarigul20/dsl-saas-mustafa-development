@@ -65,9 +65,10 @@ export class AuthenticationController {
       _id: signedUpUser._id,
       profile: signedUpUserProfile._id
     };
-    /*
-    const updatedUser: User = await this.userService.update(String(signedUpUser._id), convertUserDtoToType(updateUserDto))
     
+    const updatedUser: User = await this.userService.update(String(signedUpUser._id), convertUserDtoToType(updateUserDto));
+    
+    /*
     return <SignUpReturnDto>{
       success: true,
       message: 'User signed up successfully! Please verify the email.'
