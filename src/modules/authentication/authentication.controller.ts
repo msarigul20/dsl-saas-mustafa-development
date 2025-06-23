@@ -7,13 +7,13 @@ import { User } from '../user/user.schema';
 import { ProfileService } from '../profile/profile.service';
 import { convertUserDtoToType } from "../user/functions/user.function";
 
-import { convertProfileDtoToType } from '../profile/functions/convertDtoToType.function';
+//import { convertProfileDtoToType } from '../profile/functions/convertDtoToType.function';
 import { Profile } from '../profile/profile.schema';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { UserService } from '../user/user.service';
 import { UserType } from '../user/user.type';
 import { ProfileType } from '../profile/profile.type';
-import { createProfileDto } from '../profile/functions/profile.function';
+import { createProfileDto, convertProfileDtoToType } from '../profile/functions/profile.function';
 
 
 @Controller('authentication')
@@ -56,10 +56,11 @@ export class AuthenticationController {
     const signedUpUser: User = await this.authenticationService.signUpUser(userType);
     
     let profileDto: CreateProfileDto = createProfileDto({signUpDto: signUpDto, _user: signedUpUser});
-    /*
+    
     const profileType: ProfileType = convertProfileDtoToType(profileDto);
+    /*
     const signedUpUserProfile: Profile = await this.profileService.createProfile(profileType);
-
+    
     let updateUserDto: UpdateUserDto = <UpdateUserDto>{
       _id: signedUpUser._id,
       profile: signedUpUserProfile._id
