@@ -5,7 +5,6 @@ import { UserType } from '../user/user.type';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
-import { SignInReturnDto } from './dto/signin-return.dto';
 
 const chalk = require('chalk');
 
@@ -73,20 +72,15 @@ export class AuthenticationService {
 
     console.log( chalk.bgGreen(_user.email), chalk.green("sign in the system."));
     console.log( chalk.bgRed("______________________________________________________________"));
-    // Create JWT token
-    // The payload can contain any data you want to include in the token
     const payload = {
       userId: _user._id,
       useremail: _user.email
     };
-    const accessToken = this.jwtService.sign(payload);
     
-    return <SignInReturnDto>({
+    return {
       success: true,
-      message: 'User signed in successfully!',
-      token: accessToken,
-      user: _user
-    });
+      access_token: this.jwtService.sign(payload)
+    }
     
   }
 
