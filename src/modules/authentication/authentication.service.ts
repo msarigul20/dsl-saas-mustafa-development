@@ -81,12 +81,12 @@ export class AuthenticationService {
     };
     const accessToken = this.jwtService.sign(payload);
     
-    return {
+    return <SignInReturnDto>({
       success: true,
       message: 'User signed in successfully!',
       token: accessToken,
       user: _user
-    };
+    });
     
   }
 
