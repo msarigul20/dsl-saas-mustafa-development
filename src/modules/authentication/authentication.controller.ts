@@ -52,28 +52,53 @@ export class AuthenticationController {
   */
   @Post('signup')
   async signup(@Body() signUpDto: SignUpDto) {
-    const userType: UserType = convertUserDtoToType(signUpDto);
-    const signedUpUser: User = await this.authenticationService.signUpUser(userType);
+    try {
+      const userType: UserType = convertUserDtoToType(signUpDto);
+      console.log('1')
+      console.log(userType)
+      console.log(signUpDto)
+
+      
+      const signedUpUser: User = await this.authenticationService.signUpUser(userType);
+      console.log('2')
+      console.log(signedUpUser)
+
+      let profileDto: CreateProfileDto = createProfileDto({signUpDto: signUpDto, _user: signedUpUser});
+      console.log('3')
+      console.log(profileDto)
+
+      const profileType: ProfileType = convertProfileDtoToType(profileDto);
+      console.log('4')
+      console.log(profileType)
+
+      const signedUpUserProfile: Profile = await this.profileService.createProfile(profileType);
+      console.log('5')
+      console.log(signedUpUserProfile)
+
+      let updateUserDto: UpdateUserDto = <UpdateUserDto>{
+        _id: signedUpUser._id,
+        profile: signedUpUserProfile._id
+      };
+      console.log('6')
+      console.log(updateUserDto)
+      
+      /*
+      const updatedUser: User = await this.userService.update(String(signedUpUser._id), convertUserDtoToType(updateUserDto));
+      
+      
+      return <SignUpReturnDto>{
+        success: true,
+        message: 'User signed up successfully! Please verify the email.'
+      };
+      */
+    } catch (error) {
+      console.error('Error during signup:', error);
+      return {
+        success: false,
+        message: 'Catch error during signup: ' + error.message
+      };
+    }
     
-    let profileDto: CreateProfileDto = createProfileDto({signUpDto: signUpDto, _user: signedUpUser});
-    
-    const profileType: ProfileType = convertProfileDtoToType(profileDto);
-    
-    const signedUpUserProfile: Profile = await this.profileService.createProfile(profileType);
-    
-    let updateUserDto: UpdateUserDto = <UpdateUserDto>{
-      _id: signedUpUser._id,
-      profile: signedUpUserProfile._id
-    };
-    
-    const updatedUser: User = await this.userService.update(String(signedUpUser._id), convertUserDtoToType(updateUserDto));
-    
-    /*
-    return <SignUpReturnDto>{
-      success: true,
-      message: 'User signed up successfully! Please verify the email.'
-    };
-    */
   }
 
 
