@@ -1,4 +1,3 @@
-import { Profile } from "src/modules/profile/profile.schema";
 import { User } from "src/modules/user/user.schema";
 
 export class SignInReturnDto {
