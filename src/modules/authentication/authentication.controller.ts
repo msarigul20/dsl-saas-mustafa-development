@@ -82,10 +82,14 @@ export class AuthenticationController {
       console.log('6')
       console.log(updateUserDto)
       
-      /*
+      
       const updatedUser: User = await this.userService.update(String(signedUpUser._id), convertUserDtoToType(updateUserDto));
       
-      
+       return {
+        success: true,
+        message: 'ya haklım başarılı bir şekilde kaydedildi.',
+      };
+      /*
       return <SignUpReturnDto>{
         success: true,
         message: 'User signed up successfully! Please verify the email.'
