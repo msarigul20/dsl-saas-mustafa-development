@@ -24,6 +24,17 @@ async function bootstrap() {
     }); 
   }
 
+  setInterval(() => {
+    const used = process.memoryUsage();
+    console.log('[MEMORY USAGE]');
+    for (const key in used) {
+        console.log(`${key} ${(used[key] / 1024 / 1024).toFixed(2)} MB`);
+        console.log('-----')
+      }
+    }, 5000
+  ); 
+
+
   // Swagger - API Doc - localhost:3000/api
   const swaggerEnvironments: Array<string> = ['DEVELOPMENT', 'ACCEPTANCE'];
   if (swaggerEnvironments.includes(configuration().system.environment)) {
