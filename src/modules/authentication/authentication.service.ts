@@ -5,6 +5,7 @@ import { UserType } from '../user/user.type';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
+import { SignInReturnDto } from './dto/signin-return.dto';
 
 const chalk = require('chalk');
 
