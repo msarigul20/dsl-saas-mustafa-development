@@ -14,6 +14,7 @@ import { UserService } from '../user/user.service';
 import { UserType } from '../user/user.type';
 import { ProfileType } from '../profile/profile.type';
 import { createProfileDto, convertProfileDtoToType } from '../profile/functions/profile.function';
+import { use } from 'passport';
 
 
 @Controller('authentication')
@@ -52,56 +53,44 @@ export class AuthenticationController {
   */
   @Post('signup')
   async signup(@Body() signUpDto: SignUpDto) {
-    try {
-      const userType: UserType = convertUserDtoToType(signUpDto);
-      console.log('1')
-      console.log(userType)
-      console.log(signUpDto)
+    const userType: UserType = convertUserDtoToType(signUpDto);
+    console.log('1')
+    console.log(userType)
+    console.log(signUpDto)
 
-      
-      const signedUpUser: User = await this.authenticationService.signUpUser(userType);
-      console.log('2')
-      console.log(signedUpUser)
+    
+    const signedUpUser: User = await this.authenticationService.signUpUser(userType);
+    console.log('2')
+    console.log(signedUpUser)
 
-      let profileDto: CreateProfileDto = createProfileDto({signUpDto: signUpDto, _user: signedUpUser});
-      console.log('3')
-      console.log(profileDto)
+    let profileDto: CreateProfileDto = createProfileDto({signUpDto: signUpDto, _user: signedUpUser});
+    console.log('3')
+    console.log(profileDto)
 
-      const profileType: ProfileType = convertProfileDtoToType(profileDto);
-      console.log('4')
-      console.log(profileType)
+    const profileType: ProfileType = convertProfileDtoToType(profileDto);
+    console.log('4')
+    console.log(profileType)
 
-      const signedUpUserProfile: Profile = await this.profileService.createProfile(profileType);
-      console.log('5')
-      console.log(signedUpUserProfile)
+    const signedUpUserProfile: Profile = await this.profileService.createProfile(profileType);
+    console.log('5')
+    console.log(signedUpUserProfile)
 
-      let updateUserDto: UpdateUserDto = <UpdateUserDto>{
-        _id: signedUpUser._id,
-        profile: signedUpUserProfile._id
-      };
-      console.log('6')
-      console.log(updateUserDto)
-      
-      
-      const updatedUser: User = await this.userService.update(String(signedUpUser._id), convertUserDtoToType(updateUserDto));
-      
-       return {
-        success: true,
-        message: 'ya haklım başarılı bir şekilde kaydedildi.',
-      };
-      /*
-      return <SignUpReturnDto>{
-        success: true,
-        message: 'User signed up successfully! Please verify the email.'
-      };
-      */
-    } catch (error) {
-      console.error('Error during signup:', error);
-      return {
-        success: false,
-        message: 'Catch error during signup: ' + error.message
-      };
-    }
+    let updateUserDto: UpdateUserDto = <UpdateUserDto>{
+      _id: signedUpUser._id,
+      profile: signedUpUserProfile._id
+    };
+    console.log('6')
+    console.log(updateUserDto)
+    
+    
+    const updatedUser: User = await this.userService.update(String(signedUpUser._id), convertUserDtoToType(updateUserDto));
+    
+
+    return {
+      success: true,
+      user: updatedUser,
+      message: 'User signed up successfully! Please verify the email.'
+    };
     
   }
 
