@@ -79,18 +79,14 @@ export class AuthenticationService {
       useremail: _user.email
     };
     const accessToken = this.jwtService.sign(payload);
-    /*
-    return <SignInReturnDto>({
+    
+    return {
       success: true,
       message: 'User signed in successfully!',
       token: accessToken,
       user: _user
-    });
-    */ 
-   return {
-      success: true,
-      access_token: this.jwtService.sign(payload)
-    }
+    };
+    
   }
 
   async findAll() {
