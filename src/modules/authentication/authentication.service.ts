@@ -72,16 +72,25 @@ export class AuthenticationService {
 
     console.log( chalk.bgGreen(_user.email), chalk.green("sign in the system."));
     console.log( chalk.bgRed("______________________________________________________________"));
+    // Create JWT token
+    // The payload can contain any data you want to include in the token
     const payload = {
       userId: _user._id,
       useremail: _user.email
     };
-    
-    return {
+    const accessToken = this.jwtService.sign(payload);
+    /*
+    return <SignInReturnDto>({
+      success: true,
+      message: 'User signed in successfully!',
+      token: accessToken,
+      user: _user
+    });
+    */ 
+   return {
       success: true,
       access_token: this.jwtService.sign(payload)
     }
-    
   }
 
   async findAll() {
